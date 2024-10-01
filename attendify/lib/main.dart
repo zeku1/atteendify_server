@@ -3,23 +3,18 @@ import 'package:attendify/Routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 
 Future main() async {
-  //
-  await dotenv.load(fileName: ".env");
+await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      initialRoute: AppRoutes.home,
+      title: 'Attendify',
+      initialRoute: AppRoutes.home, // Set initial route
       routes: AppRoutes.getRoutes(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
