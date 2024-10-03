@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Attendify',
-      initialRoute: AppRoutes.home, // Set initial route
+      initialRoute: AppRoutes.scanner, // Set initial route
       routes: AppRoutes.getRoutes(),
       debugShowCheckedModeBanner: false,
     );
