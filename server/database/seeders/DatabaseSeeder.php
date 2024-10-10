@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        // User::create([
-        //     'name' => 'Admintify',
-        //     'email' => 'admin@attendify.systems',
-        //     'password' => 'attendify_password'
-        // ]);
+        User::create([
+            'name' => 'Admintify',
+            'email' => 'admin@attendify.systems',
+            'password' => 'attendify_password'
+        ]);
 
        Teacher::factory()
             ->count(5)
