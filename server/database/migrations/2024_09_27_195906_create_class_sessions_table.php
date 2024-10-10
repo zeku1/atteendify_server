@@ -17,8 +17,8 @@ return new class extends Migration
                 ->references('id')
                 ->on('sections');
             $table->date('date');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->timestamps();
         });
     }

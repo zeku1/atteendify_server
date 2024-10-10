@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Section;
+use App\Models\ClassParticipant;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class SectionController extends Controller
+class ClassParticipantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class SectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Section $section)
+    public function show(ClassParticipant $classParticipant)
     {
         //
     }
@@ -42,7 +43,7 @@ class SectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Section $section)
+    public function edit(ClassParticipant $classParticipant)
     {
         //
     }
@@ -50,7 +51,7 @@ class SectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request, ClassParticipant $classParticipant)
     {
         //
     }
@@ -58,7 +59,7 @@ class SectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Section $section)
+    public function destroy(ClassParticipant $classParticipant)
     {
         //
     }

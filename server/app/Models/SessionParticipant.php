@@ -14,4 +14,13 @@ class SessionParticipant extends Model
         'student_id',
         'time'
     ];
+
+    public function classSession()
+    {
+        return $this->belongsTo(ClassSession::class, 'class_session_id'); // This references ClassSession
+    }
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

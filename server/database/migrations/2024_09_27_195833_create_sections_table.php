@@ -19,6 +19,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('teachers')
                 ->onDelete('set null');
+            $table->string('teacher_name');
             $table->year('year');
             $table->string('semester');
             $table->timestamps();

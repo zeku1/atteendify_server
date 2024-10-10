@@ -13,4 +13,14 @@ class ClassParticipant extends Model
         'section_id',
         'student_id'
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'class_id'); // Adjust if necessary
+    }
 }

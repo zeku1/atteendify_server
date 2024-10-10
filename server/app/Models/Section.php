@@ -12,7 +12,18 @@ class Section extends Model
     protected $fillable = [
         'section_name',
         'teacher_id',
+        'teacher_name',
         'year',
         'semester'
     ];
+
+    public function classSessions()
+    {
+        return $this->hasMany(ClassSession::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
 }

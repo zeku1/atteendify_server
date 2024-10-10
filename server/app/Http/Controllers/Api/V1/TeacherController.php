@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\ClassSession;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ClassSessionController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class ClassSessionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ClassSession $classSession)
+    public function show(Teacher $teacher)
     {
         //
     }
@@ -42,7 +43,7 @@ class ClassSessionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ClassSession $classSession)
+    public function edit(Teacher $teacher)
     {
         //
     }
@@ -50,7 +51,7 @@ class ClassSessionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ClassSession $classSession)
+    public function update(Request $request, Teacher $teacher)
     {
         //
     }
@@ -58,7 +59,7 @@ class ClassSessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ClassSession $classSession)
+    public function destroy(Teacher $teacher)
     {
         //
     }
