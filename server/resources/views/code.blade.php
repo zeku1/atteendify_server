@@ -51,7 +51,7 @@
         .header {
             width: 100%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             padding: 20px;
             position: absolute;
             top: 0;
@@ -67,7 +67,7 @@
         .container {
             text-align: center;
             padding: 60px 20px;
-            margin-top: 60px;
+            
             z-index: 1;
         }
 
@@ -82,28 +82,15 @@
         a {
             text-decoration: none;
             color: black;
-          
+
             opacity: 1;
             font-size: 20px;
-        
+
             position: relative;
-            animation: glow 2s infinite alternate ease-in-out;
-      +
+
         }
 
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
-            }
 
-            50% {
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
-            }
-
-            100% {
-                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
-            }
-        }
 
 
 
@@ -118,7 +105,7 @@
             }
 
             .logo {
-                margin: 30px 10px;
+                margin: 10px 10px;
             }
         }
     </style>
@@ -126,27 +113,30 @@
 
 <body>
 
-    <div class="blob-container"></div>
 
     <div class="header">
         <div class="logo">ATTENDIFY</div>
-        <div class="crumbs">VERIFICATION</div>
+     
     </div>
 
     <div class="container">
+
+
         <div class="container1">
+
             <p><span class="low-opacity">Hi </span><span class="important">[User's Name]</span></p>
             <p><span class="low-opacity">We're </span><span class="important">happy</span><span class="low-opacity"> to
                     have you here!<br><br> To </span><span class="important">complete</span><span class="low-opacity">
                     your registration, <br>please verify your </span><span class="important">email address</span><span
                     class="low-opacity"><br> by </span><span class="important"> following the task</span><span
                     class="low-opacity"> below:</span></p>
-            <br><br>
+            <br><br><br><br>
             <p class="highlight" style="text-align: center;">
                 <a href="[verification_link]" class="black"><span class="low-opacity">Tap</span> <span
                         class="important">here</span> to verify <span class="low-opacity">email</span></a>
             </p>
 
+            <br><br>
             <br><br>
             <p><span class="low-opacity">If you </span><span class="important">did not</span><span class="low-opacity">
                     sign up for this account,<br> please </span><span class="important">ignore</span><span
@@ -157,61 +147,7 @@
         </div>
     </div>
 
-    <script>
-        const rnd = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-        const colors = ["#0DFDD9", "#FF5C5C", "#CD75FF"];
 
-        const rndBorderRadius = () =>
-            [...Array(4).keys()].map(() => rnd(30, 85) + "%").join(" ") +
-            " / " +
-            [...Array(4).keys()].map(() => rnd(30, 85) + "%").join(" ");
-
-        const createBlob = ({ id, x, y, color }) => {
-            const blobContainer = document.querySelector(".blob-container");
-            const blob = document.createElement("div");
-            blob.id = `blob-${id}`;
-            blob.classList.add("blob");
-            blob.style.top = `${y}%`;
-            blob.style.left = `${x}%`;
-            blob.style.backgroundColor = color;
-            blob.style.transform = `scale(${rnd(1.25, 2)})`;
-            blob.style.borderRadius = rndBorderRadius();
-            blobContainer.appendChild(blob);
-            animateBlob(blob);
-        };
-
-        const animateBlob = (blob) => {
-            const animationDuration = rnd(500, 1000);
-            blob.animate(
-                [
-                    {
-                        transform: blob.style.transform,
-                        borderRadius: blob.style.borderRadius,
-                    },
-                    {
-                        transform: `scale(${rnd(1.25, 2)})`,
-                        borderRadius: rndBorderRadius(),
-                    },
-                ],
-                {
-                    duration: animationDuration,
-                    direction: "alternate",
-                    fill: "both",
-                    iterations: Infinity,
-                    easing: "ease-in-out",
-                }
-            );
-        };
-
-        [...Array(7).keys()].forEach((blob) => {
-            createBlob({
-                id: blob,
-                x: rnd(-10, 100),
-                y: rnd(-10, 100),
-                color: colors[rnd(0, colors.length - 1)],
-            });
-        });
-    </script>
 </body>
 
 </html>
