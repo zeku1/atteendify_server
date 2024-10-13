@@ -158,7 +158,6 @@ class ClassSessionController extends Controller
         $request->validate([
             'section_id' => 'required'
         ]);
-
         
         $section = Section::where('id', $request->section_id)->first();
         if (!$section) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyStudent;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -12,17 +13,24 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
+
+    protected static $emailVerification = VerifyStudent::class;
+
     public function login(Request $request)
     {
-        // Validate email and password fields
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ],[
+            'email.required' => 'The email field is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters long.'
         ]);
 
 
         // Check if the user is a student
-        $student = Student::where('email', $request->email)->with('sections')->first();
+        $student = Student::where('email', $request->email)->first();
        
         if ($student && Hash::check($request->password, $student->password)) {
             $token = $student->createToken('student-api-token', ['student'])->plainTextToken;
@@ -33,10 +41,14 @@ class LoginController extends Controller
                 'student' => $student,
                 'token' => $token,
             ],200);
+        }else{
+            return response()->json([
+                'message' => 'Password is incorrect',
+            ],401);
         }
 
         // Check if the user is a teacher
-        $teacher = Teacher::where('email', $request->email)->with('sections')->first();
+        $teacher = Teacher::where('email', $request->email)->first();
         if ($teacher && Hash::check($request->password, $teacher->password)) {
             $token = $teacher->createToken('teacher-api-token', ['teacher'])->plainTextToken;
 
@@ -46,9 +58,12 @@ class LoginController extends Controller
                 'teacher' => $teacher,
                 'token' => $token,
             ],200);
+        }else{
+            return response()->json([
+                'message' => 'Password is incorrect',
+            ],401);
         }
 
-        // Invalid credentials
         return response()->json([
             'error_message' => 'Invalid email or password.'
         ], 401);
@@ -57,11 +72,11 @@ class LoginController extends Controller
     public function register(Request $request)
     {
 
-            $request->validate([
+        $request->validate([
             'school_id' => 'required|string',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'email' => 'email',
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
@@ -71,7 +86,7 @@ class LoginController extends Controller
         
         if($student){
             return response()->json([
-                'error_message' => 'Account already exist.'
+                'message' => 'Account already exist.'
             ],422);
         }
 
@@ -81,16 +96,14 @@ class LoginController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => $request->password,
-            'isEnrolled' => true
+            'isEnrolled' => false
         ]);
 
         if(!$student){
             return response()->json([
-                'error_message' => "There was an saving the account"
+                'message' => "There was an saving the account"
             ],500);
         }
-
-        
 
         $token = $student->createToken('student-api-token', ['student'])->plainTextToken;
 
@@ -103,5 +116,13 @@ class LoginController extends Controller
 
     }
 
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Logout successful',
+        ], 200);
+    }
 
 }

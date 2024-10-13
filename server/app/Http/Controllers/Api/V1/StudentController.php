@@ -12,13 +12,17 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->user()->tokenCan('teacher')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $students = Student::all();
 
         if(!$students){
             return response()->json([
-                'error_message' => 'Failed to retrieve data.',
+                'message' => 'Failed to retrieve data.',
             ],500);
         }
 
@@ -31,16 +35,14 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Student $student)
     {
 
-        $student = Student::with('sections')
-                            ->where('id',$id)
-                            ->first();
+        $student->load('sections');
 
         if($student==null){
             response()->json([
-                'error_message' => 'Student not found.' 
+                'message' => 'Student not found.' 
             ], 404);
         }
        
@@ -54,8 +56,6 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-
-
         
     }
 

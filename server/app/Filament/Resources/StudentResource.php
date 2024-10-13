@@ -43,7 +43,7 @@ class StudentResource extends Resource
                 TextInput::make('school_id')
                     ->required(),
                 Toggle::make('isEnrolled') // Directly use the attribute name
-                    ->label('Currently Enrolled') // Set a label for the toggle
+                    ->label('Verified') // Set a label for the toggle
                     ->inline(false)
                     ->default($student ? $student->isEnrolled : false),
                 TextInput::make('email')
@@ -64,7 +64,7 @@ class StudentResource extends Resource
                 TextColumn::make('first_name'),
                 TextColumn::make('last_name'),
                 TextColumn::make('email'),
-                BooleanColumn::make('isEnrolled'),
+                BooleanColumn::make('isEnrolled')->label('Verified'),
             ])
             ->filters([
                 //

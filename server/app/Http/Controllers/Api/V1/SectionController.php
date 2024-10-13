@@ -29,26 +29,27 @@ class SectionController extends Controller
         $students = $validated['student_ids'];
 
         foreach($students as $student){
- 
             $enrolled = ClassParticipant::create([
                 'section_id' => $classId,
                 'student_id' => $student
             ]);
-
         }
 
         return response()->json([
             'message' => 'Students processed successfully!'
         ], 200);
-
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index(Request $request)
     {
-        $sectionsByTeacher = Section::where('teacher_id', $id)->get();
+        $request->validate([
+            'id' => 'required|integer'
+        ]);
+
+        $sectionsByTeacher = Section::where('teacher_id', $request->id)->get();
 
         if ($sectionsByTeacher->isEmpty()) {
             return response()->json([

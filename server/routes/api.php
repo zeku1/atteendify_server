@@ -18,38 +18,39 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'],fu
         ->group(function(){
             Route::post('/register','register')->name('register');
             Route::post('/login','login')->name('login');
-            Route::post('/logout','logout')->name('logout');
         });
 
     Route::group(['middleware' => 'auth:sanctum'],function(){
+        Route::post('/logout',[LoginController::class,'logout'])->name('logout');
 
         Route::controller(StudentController::class)
-        ->prefix('student')
-        ->group(function(){
-            Route::get('/profile/{id}','show')->name('profile');
-            Route::get('/all-student','index')->name('profile');
-        });
+            ->prefix('student')
+            ->group(function(){
+                Route::get('/{student}','show')->name('profile.student');
+                Route::get('/all','index')->name('profile.all');
+            });
 
         Route::controller(SectionController::class)
-        ->prefix('class')
-        ->group(function(){
-            Route::post('/add-students','addStudents')->name('class.add');
-            Route::post('/store','store')->name('class.store');
-            Route::get('/index/{id}','index')->name('class.index');
-            Route::get('/show/{id}','show')->name('class.show');
-            Route::put('/edit/{id}','update')->name('class.update');
-            Route::delete('/destroy/{id}','destroy')->name('class.destroy');
-        });
+            ->prefix('class')
+            ->middleware(['ability:teacher'])
+            ->group(function(){
+                Route::get('/all','index')->name('class.index');
+                Route::get('/{id}','show')->name('class.show');
+                Route::post('/create','store')->name('class.store');
+                Route::put('/edit/{id}','update')->name('class.update');
+                Route::delete('/destroy/{id}','destroy')->name('class.destroy');
+                Route::post('/add-students','addStudents')->name('class.add'); 
+            });
 
         Route::controller(ClassSessionController::class)
-        ->prefix('session')
-        ->group(function(){
-            Route::post('/open-session','start')->name('session.open');
-            Route::post('/end-session','end')->name('session.end');
-            Route::post('/add-student/bulk','addBulkStudent')->name('session.addStudent.bulk');
-            Route::post('/add-student','addStudent')->name('session.addStudent');
-            Route::post('/join-session','joinSession')->name('session.joinSession');
-        });
+            ->prefix('session')
+            ->group(function(){
+                Route::post('/open-session','start')->name('session.open');
+                Route::post('/end-session','end')->name('session.end');
+                Route::post('/add-student/bulk','addBulkStudent')->name('session.addStudent.bulk');
+                Route::post('/add-student','addStudent')->name('session.addStudent');
+                Route::post('/join-session','joinSession')->name('session.joinSession');
+            });
     });
 
 });
