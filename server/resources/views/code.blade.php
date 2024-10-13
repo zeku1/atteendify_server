@@ -60,7 +60,7 @@
             z-index: 1;
         }
 
-        p{
+        p {
             font-size: 20px;
         }
 
@@ -82,12 +82,35 @@
         a {
             text-decoration: none;
             color: black;
+          
             opacity: 1;
+            font-size: 20px;
+        
+            position: relative;
+            animation: glow 2s infinite alternate ease-in-out;
+      +
         }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
+            }
+
+            50% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
+            }
+
+            100% {
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+
 
         .footer {
             opacity: 1;
         }
+
 
         @media (max-width: 768px) {
             .crumbs {
@@ -103,7 +126,7 @@
 
 <body>
 
-    <div class="blob-container"></div> 
+    <div class="blob-container"></div>
 
     <div class="header">
         <div class="logo">ATTENDIFY</div>
@@ -119,8 +142,9 @@
                     class="low-opacity"><br> by </span><span class="important"> following the task</span><span
                     class="low-opacity"> below:</span></p>
             <br><br>
-            <p style="text-align: center;">
-                <a href="[verification_link]" class="black"><span class="low-opacity">Tap</span> <span class="important">here</span> to verify <span class="low-opacity">email</span></a>
+            <p class="highlight" style="text-align: center;">
+                <a href="[verification_link]" class="black"><span class="low-opacity">Tap</span> <span
+                        class="important">here</span> to verify <span class="low-opacity">email</span></a>
             </p>
 
             <br><br>
@@ -128,7 +152,8 @@
                     sign up for this account,<br> please </span><span class="important">ignore</span><span
                     class="low-opacity"> this email.</span></p>
             <br><br>
-            <p class="footer"><span class="low-opacity">Best regards,</span><br><span class="important">The TEAM</span></p>
+            <p class="footer"><span class="low-opacity">Best regards,</span><br><span class="important">The TEAM</span>
+            </p>
         </div>
     </div>
 
