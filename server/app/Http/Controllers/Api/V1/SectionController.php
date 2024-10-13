@@ -53,7 +53,7 @@ class SectionController extends Controller
 
         if ($sectionsByTeacher->isEmpty()) {
             return response()->json([
-                'error_message' => 'No data found'
+                'message' => 'No data found'
             ], 404);
         }
         
@@ -80,7 +80,7 @@ class SectionController extends Controller
         
         if ($isAlreadySaved) {
             return response()->json([
-                'error_message' => "There's already a room for that section in the current year."
+                'message' => "There's already a room for that section in the current year."
             ], 409); 
         }
         
@@ -96,7 +96,7 @@ class SectionController extends Controller
         
         if (!$section) {
             return response()->json([
-                'error_message' => "There's a problem creating the class."
+                'message' => "There's a problem creating the class."
             ], 500); // Internal Server Error
         }
         
@@ -113,18 +113,18 @@ class SectionController extends Controller
      */
     public function show($id)
     {
-        $section = Section::where('id',$id)->first();
-
-        if(!$section){
+        $section = Section::where('id', $id)->with('classSessions')->first();
+    
+        if (!$section) {
             return response()->json([
-                'error_message' => "Connot find section"
-            ],404);
+                'message' => "Cannot find section"
+            ], 404);
         }
-
+    
         return response()->json([
-            'message' => "Section found succesfully!",
-            'class' => $section
-        ],302);
+            'message' => "Section found successfully!",
+            'class' => $section  
+        ], 200); 
     }
 
     /**
@@ -149,7 +149,7 @@ class SectionController extends Controller
         
         if (!$section) {
             return response()->json([
-                'error_message' => "There's a problem updating the class."
+                'message' => "There's a problem updating the class."
             ], 422);
         }
         
@@ -167,7 +167,7 @@ class SectionController extends Controller
 
         if(!$section){
             return response()->json([
-                'error_message' => "Connot find class"
+                'message' => "Connot find class"
             ],404);
         }
 

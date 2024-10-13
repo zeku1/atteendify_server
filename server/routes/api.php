@@ -17,6 +17,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'],fu
     Route::controller(LoginController::class)
         ->group(function(){
             Route::post('/register','register')->name('register');
+            Route::post('/verify-email/{id}','verify')->name('verify');
             Route::post('/login','login')->name('login');
         });
 

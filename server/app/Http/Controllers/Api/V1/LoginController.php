@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -71,7 +72,6 @@ class LoginController extends Controller
 
     public function register(Request $request)
     {
-
         $request->validate([
             'school_id' => 'required|string',
             'first_name' => 'required|string',
@@ -105,6 +105,12 @@ class LoginController extends Controller
             ],500);
         }
 
+        $subject = 'Email Verification';
+        $name = ucfirst($student->first_name).' '.ucfirst($student->last_name);
+        $link = env('APP_URL').'/api/v1/verify-email/'.$student->id;
+
+        $this->sendMessage($subject,$name,$link,$student->email);
+
         $token = $student->createToken('student-api-token', ['student'])->plainTextToken;
 
         return response()->json([
@@ -114,6 +120,19 @@ class LoginController extends Controller
             'token' => $token,
         ], 201);
 
+    }
+
+    private function sendMessage($subject,$name,$link,$studentEmail)
+    {
+        Mail::to($studentEmail)
+        ->send(new VerifyStudent($subject,$name,$link))
+        ->replyTo('noreply@example.com');
+    }
+
+    public function verify($id){
+        $student = Student::where('id',$id);
+
+        return view('tyPage');
     }
 
     public function logout(Request $request)

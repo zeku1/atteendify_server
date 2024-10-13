@@ -14,17 +14,17 @@ class VerifyStudent extends Mailable
     use Queueable, SerializesModels;
 
     public $mailSubject;
-    public $messageContent;
+    public $name;
     public $link;
 
 
     /**
      * Create a new message instance.
      */
-    public function __construct($subject, $messageContent, $link)
+    public function __construct($subject, $name, $link)
     {
         $this->mailSubject = $subject;
-        $this->messageContent = $messageContent;
+        $this->name = $name;
         $this->link = $link;
     }
 
@@ -34,7 +34,7 @@ class VerifyStudent extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Student',
+            subject: $this->mailSubject,
         );
     }
 
@@ -44,7 +44,11 @@ class VerifyStudent extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'code',
+            with: [
+                'name' => $this->name,
+                'link' => $this->link,
+            ],
         );
     }
 
