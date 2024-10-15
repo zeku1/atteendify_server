@@ -207,6 +207,19 @@ class ClassSessionController extends Controller
         ], 200);
     }
 
+    public function getStudentBySessionId($sessionId)
+    {
+        $classSession = ClassSession::with('students')->find($sessionId);
+
+        if (!$classSession) {
+            return response()->json(['error' => 'Class session not found'], 404);
+        }
+
+        return response()->json([
+            'students'=>$classSession->students
+        ],200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
