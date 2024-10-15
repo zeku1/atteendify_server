@@ -43,13 +43,10 @@ class SectionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function getByTeacher($id)
     {
-        $request->validate([
-            'id' => 'required|integer'
-        ]);
 
-        $sectionsByTeacher = Section::where('teacher_id', $request->id)->get();
+        $sectionsByTeacher = Section::where('teacher_id', $id)->get();
 
         if ($sectionsByTeacher->isEmpty()) {
             return response()->json([
@@ -60,7 +57,7 @@ class SectionController extends Controller
         return response()->json([
             'message' => 'Classes have been found',
             'classes' => $sectionsByTeacher
-        ], 302);
+        ], 200);
     }
 
     /**
@@ -97,15 +94,14 @@ class SectionController extends Controller
         if (!$section) {
             return response()->json([
                 'message' => "There's a problem creating the class."
-            ], 500); // Internal Server Error
+            ], 500); 
         }
         
         return response()->json([
             'message' => 'Class created successfully.',
             'section' => $section
-        ], 201); // 201 Created
+        ], 201); 
         
-
     }
 
     /**
@@ -124,7 +120,7 @@ class SectionController extends Controller
         return response()->json([
             'message' => "Section found successfully!",
             'class' => $section  
-        ], 200); 
+        ], 200);  // Use 200 for successful response
     }
 
     /**

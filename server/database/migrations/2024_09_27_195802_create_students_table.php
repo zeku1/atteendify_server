@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('isEnrolled');
             $table->string('image_link')->nullable();
+            $table->string('verification_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

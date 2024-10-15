@@ -26,5 +26,11 @@ class ClassSession extends Model
         return $this->hasMany(SessionParticipant::class, 'class_session_id');
     }
 
+    public function students()
+    {
+        return $this->hasManyThrough(Student::class, SessionParticipant::class, 'class_session_id', 'id', 'id', 'student_id');
+
+    }
+
     
 }

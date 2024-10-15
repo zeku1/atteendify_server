@@ -12,7 +12,7 @@ class SessionParticipant extends Model
     protected $fillable = [
         'class_session_id',
         'student_id',
-        'time'
+        'time',
     ];
 
     public function classSession()

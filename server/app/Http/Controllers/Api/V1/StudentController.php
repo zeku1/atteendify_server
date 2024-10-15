@@ -12,11 +12,11 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        if (!$request->user()->tokenCan('teacher')) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if (!$request->user()->tokenCan('teacher')) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         $students = Student::all();
 
@@ -28,7 +28,7 @@ class StudentController extends Controller
 
         return response()->json([
             'message' => 'Success!',
-           'student' => $students
+           'student' => $students->load('sections')
         ],200);
     }
 

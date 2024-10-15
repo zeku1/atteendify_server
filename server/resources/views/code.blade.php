@@ -67,7 +67,6 @@
         .container {
             text-align: center;
             padding: 60px 20px;
-
             z-index: 1;
         }
 
@@ -90,11 +89,6 @@
 
         }
 
-        .logo {
-            margin: 10px 10px;
-            font-weight: 900;
-        }
-
 
 
         .footer {
@@ -115,10 +109,6 @@
 </head>
 
 <body>
-
-
-
-
     <div class="container">
 
         <div class="container1">
@@ -132,8 +122,8 @@
                     class="low-opacity"> below:</span></p>
             <br><br><br><br>
             <p class="highlight" style="text-align: center;">
-                <a href="{{ $link }}" class="black"><span class="low-opacity">Tap</span> <span
-                        class="important">here</span> to verify <span class="low-opacity">email</span></a>
+                <a href="{{ $link }}" class="black"><span class="low-opacity">Tap</span> 
+                <span class="important">here</span> to verify <span class="low-opacity">email</span></a>
             </p>
 
             <br><br>

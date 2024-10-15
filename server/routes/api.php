@@ -17,7 +17,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'],fu
     Route::controller(LoginController::class)
         ->group(function(){
             Route::post('/register','register')->name('register');
-            Route::post('/verify-email/{id}','verify')->name('verify');
+            Route::get('/verify-email/{token}','verify')->name('verify');
             Route::post('/login','login')->name('login');
         });
 
@@ -28,15 +28,16 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'],fu
             ->prefix('student')
             ->group(function(){
                 Route::get('/{student}','show')->name('profile.student');
-                Route::get('/all','index')->name('profile.all');
+                Route::get('/','index')->name('profile.all');
             });
+
+        Route::get('class/show/{id}',[SectionController::class,'show'])->name('class.show');
 
         Route::controller(SectionController::class)
             ->prefix('class')
-            ->middleware(['ability:teacher'])
+            // ->middleware(['ability:teacher'])
             ->group(function(){
-                Route::get('/all','index')->name('class.index');
-                Route::get('/{id}','show')->name('class.show');
+                Route::get('/{id}','getByTeacher')->name('class.index');
                 Route::post('/create','store')->name('class.store');
                 Route::put('/edit/{id}','update')->name('class.update');
                 Route::delete('/destroy/{id}','destroy')->name('class.destroy');
@@ -46,11 +47,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'],fu
         Route::controller(ClassSessionController::class)
             ->prefix('session')
             ->group(function(){
-                Route::post('/open-session','start')->name('session.open');
+                Route::post('/open-session/{id}','start')->name('session.open');
                 Route::post('/end-session','end')->name('session.end');
-                Route::post('/add-student/bulk','addBulkStudent')->name('session.addStudent.bulk');
                 Route::post('/add-student','addStudent')->name('session.addStudent');
                 Route::post('/join-session','joinSession')->name('session.joinSession');
+                Route::post('/{$classSession}','show')->name('session.show');
             });
     });
 

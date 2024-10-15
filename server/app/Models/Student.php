@@ -21,12 +21,14 @@ class Student extends Model
         'email',
         'password',
         'isEnrolled',
-        'image_link'
+        'image_link',
+        'verification_token'
     ];
 
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
+        'verification_token'
     ];
 
     public function setPasswordAttribute($password){
