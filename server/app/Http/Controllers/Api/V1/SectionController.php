@@ -119,7 +119,7 @@ class SectionController extends Controller
     
         return response()->json([
             'message' => "Section found successfully!",
-            'class' => $section  
+            'class' => $section->load('classSessions') 
         ], 200);  // Use 200 for successful response
     }
 

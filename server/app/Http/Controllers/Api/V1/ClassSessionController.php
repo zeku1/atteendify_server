@@ -77,13 +77,14 @@ class ClassSessionController extends Controller
     public function addStudent(Request $request)
     {
         $request->validate([
-            'session_id' => 'required|integer',
+            'id' => 'required',
             'student_school_id' => 'required|string',
             'time' => 'required|date_format:H:i:s'
         ]);
-        $session = ClassSession::where('id',$request->session_id)
+        $session = ClassSession::where('id',$request->id)
                 ->whereNull('end_time')
                 ->first();
+
         if(!$session){
             return response()->json([
             'error_message' => 'The session has already ended'
@@ -98,7 +99,7 @@ class ClassSessionController extends Controller
             ],400);
         }
 
-        $sessionParticipant = SessionParticipant::where('class_session_id', $session->id)
+        $sessionParticipant = SessionParticipant::where('class_session_id', $request->id)
                                                 ->where('student_id', $student->id)
                                                 ->first();
         if ($sessionParticipant) {
@@ -108,7 +109,7 @@ class ClassSessionController extends Controller
         }
 
         SessionParticipant::create([
-            'class_session_id' => $request->session_id,
+            'class_session_id' => $request->id,
             'student_id' => $student->id,
             'time' => $request->time
         ]);

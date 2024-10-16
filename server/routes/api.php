@@ -49,7 +49,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'],fu
             ->group(function(){
                 Route::post('/open-session/{id}','start')->name('session.open');
                 Route::post('/end-session','end')->name('session.end');
+
                 Route::post('/add-student','addStudent')->name('session.addStudent');
+
                 Route::post('/join-session','joinSession')->name('session.joinSession');
                 Route::get('/{classSession}','show')->name('session.show');
                 Route::get('/students/{sessionId}','getStudentBySessionId');
